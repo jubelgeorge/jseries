@@ -11,7 +11,7 @@ import Spinner from '../layout/Spinner';
 
 
 const Login = ({ history }) => {
-  const [email, setEmail] = useState("jubelbgeorge@gmail.com");
+  const [email, setEmail] = useState("jubelbaby@gmail.com");
   const [password, setPassword] = useState("123456");
   const [loading, setLoading] = useState(false);
 
@@ -37,11 +37,11 @@ const Login = ({ history }) => {
       if (res.data.role === "admin") {
         history.push("/admin/dashboard");
       } else {
-        history.push("/user/dashboard");
+        history.push("/dashboard");
       }
     }
-  };
-
+  };      
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -64,7 +64,7 @@ const Login = ({ history }) => {
               _id: res.data._id,
             },
           });
-          roleBasedRedirect(res);
+          roleBasedRedirect(res);          
         })
         .catch((err) => console.log(err));
 

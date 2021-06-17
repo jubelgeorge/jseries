@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export const getUpcomingShows = async () =>
-  await axios.get('/api/admin/upcoming-shows');
+  await axios.get(`${process.env.REACT_APP_API}/upcoming-shows`);
 
 export const removeUpcomingShow = async (upcomingShowId, authtoken) =>
-  await axios.delete(`/api/admin/upcoming-show/${upcomingShowId}`, {
+  await axios.delete(`${process.env.REACT_APP_API}/admin/upcoming-show/${upcomingShowId}`, {
     headers: {
       authtoken,
     },
@@ -12,7 +12,7 @@ export const removeUpcomingShow = async (upcomingShowId, authtoken) =>
 
 export const createUpcomingShow = async (formData, authtoken) =>
   await axios.post(
-    '/api/admin/upcoming-show',
+    `${process.env.REACT_APP_API}/admin/upcoming-show`,
     formData,
     {
       headers: {

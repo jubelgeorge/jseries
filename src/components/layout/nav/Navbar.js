@@ -18,10 +18,16 @@ const Navbar = () => {
 
   const logout = () => {
     firebase.auth().signOut();
+
+    if (typeof window !== 'undefined') {
+       localStorage.removeItem('userShowList');
+    }
+
     dispatch({
       type: "LOGOUT",
       payload: null,
     });
+    
     history.push("/login");
   };  
 
@@ -55,7 +61,7 @@ const Navbar = () => {
         <Fragment>
           {user && user.role === "subscriber" && (
             <li>
-              <Link to="/user/dashboard">
+              <Link to="/dashboard">
                 <i className="fas fa-user" />{' '}
                 <span className="hide-sm">Dashboard</span>
               </Link>

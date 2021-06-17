@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { Card, Tooltip } from "antd";
+
+import { Card } from "antd";
 import { EyeOutlined, PlusOutlined } from "@ant-design/icons";
 import pic from "../../img/tvseries.jpg";
 import { Link } from "react-router-dom";
-//import { showAverage } from "../../functions/rating";
-//import _ from "lodash";
-//import { useSelector, useDispatch } from "react-redux";
 
 const { Meta } = Card;
 
+
 export const ShowCardMultiple = ({ show }) => {
-  const [tooltip, setTooltip] = useState("Click to add");
-  
+
   // destructure
   const show1 = show.show;
 
@@ -20,10 +18,11 @@ export const ShowCardMultiple = ({ show }) => {
   else 
     var image = show1.image.original;
   
-  const { url, name, premiered } = show1;
+  const { externals, url, name, premiered } = show1;
+  const {imdb} = externals;   
+
   return (
-    <>
-      
+    <>      
       <Card
         cover={
           <img
@@ -33,15 +32,9 @@ export const ShowCardMultiple = ({ show }) => {
           />
         }
         actions={[
-          <Link to={'/'}>
+          <Link to={`/show/${imdb}`}>
             <EyeOutlined className="text-warning" /> <br /> View Show
-          </Link>,
-          <Tooltip title={tooltip}>
-            
-          <PlusOutlined className="text-danger" /> <br /> Add to List
-              
-            
-          </Tooltip>,
+          </Link>          
         ]}
       >
         <Meta
@@ -53,11 +46,13 @@ export const ShowCardMultiple = ({ show }) => {
   );
 };
 
-export const ShowCardSingleIMDB = ({ show }) => {
+export const ShowCardSingleIMDB = ({ show, IMDB }) => {
   const [tooltip, setTooltip] = useState("Click to add");
       
-  const { url, name, premiered } = show;
-  //console.log(show);
+  const { id, url, name, premiered } = show;
+  const imdb = IMDB;
+  console.log(imdb);
+  
   return (
     <>      
       <Card
@@ -69,15 +64,9 @@ export const ShowCardSingleIMDB = ({ show }) => {
           />
         }
         actions={[
-          <Link to={'/'}>
+          <Link to={`/show/${imdb}`}>
             <EyeOutlined className="text-warning" /> <br /> View Show
-          </Link>,
-          <Tooltip title={tooltip}>
-            
-          <PlusOutlined className="text-danger" /> <br /> Add to List
-              
-            
-          </Tooltip>,
+          </Link>          
         ]}
       >
         <Meta

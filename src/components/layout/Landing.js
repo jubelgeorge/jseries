@@ -3,12 +3,14 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
 import { Carousel } from 'antd';
-import pic from "../../img/showcase.jpg";
 
 import {getUpcomingShows} from "../../functions/upcomingShow";
 import {getTrendingShows} from "../../functions/trendingShow";
 
 import Spinner from '../layout/Spinner';
+
+// import { Carousel } from "react-responsive-carousel";
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const contentStyle = {
   height: '500px',
@@ -32,6 +34,7 @@ const Landing = () => {
   const { user } = useSelector((state) => ({ ...state }));
   
   useEffect(() => {
+    setLoading(true);
     loadAllUpcomingShows();
     loadAllTrendingShows();
   }, []);
@@ -94,12 +97,22 @@ const Landing = () => {
       ) : (
       <Carousel autoplay className="pr-5 pl-5">
         {upcomingShows.map((u) => (
-          <div>
-            <img key={u._id} style={contentStyle} src={`/uploads/${u.image}`} />      
+          <div key={u._id}>
+            <img style={contentStyle} src={`/uploads/${u.image}`} />      
           </div>
         ))}
       </Carousel>
     )}
+
+    {/* {loading ? (
+      <Spinner />
+      ) : (
+      <Carousel showArrows={true} autoPlay infiniteLoop>
+        {upcomingShows.map((u) => (          
+            <img key={u._id} src={`/uploads/${u.image}`} />    
+        ))}
+      </Carousel>
+    )} */}
     
 
     <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
@@ -110,12 +123,22 @@ const Landing = () => {
       ) : (
       <Carousel autoplay className="pr-5 pl-5">
         {trendingShows.map((t) => (
-          <div>
-            <img key={t._id} style={contentStyle} src={`/uploads/${t.image}`} />      
+          <div key={t._id}>
+            <img style={contentStyle} src={`/uploads/${t.image}`} />      
           </div>
         ))}
       </Carousel>
     )}
+
+    {/* {loading ? (
+      <Spinner />
+      ) : (
+      <Carousel showArrows={true} autoPlay infiniteLoop className="pr-5 pl-5">
+        {trendingShows.map((t) => (          
+            <img key={t._id} src={`/uploads/${t.image}`} /> 
+        ))}
+      </Carousel>
+    )} */}
 
   </div>
   );

@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getSearchShows = async (arg) => {
   return await axios.post(
-      '/api/search/shows',      
+    `${process.env.REACT_APP_API}/search-shows`,      
       arg      
   );
 };
