@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 // import Footer from './components/layout/Footer';
 //using lazy
 const Navbar = lazy(() => import('./components/layout/nav/Navbar'));
+// const SideDrawer = lazy(() => import("./components/layout/SideDrawer"));
 const Landing = lazy(() => import( './components/layout/Landing'));
 const Routes = lazy(() => import('./components/routing/Routes'));
 const Footer = lazy(() => import('./components/layout/Footer'));
@@ -51,6 +52,7 @@ const App = () => {
       }
     >
       <Navbar />
+      {/* <SideDrawer /> */}
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Landing} />

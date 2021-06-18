@@ -47,3 +47,26 @@ export const updateShow = async (showWatchStatus, id, authtoken) =>
       },
     }    
 );
+
+export const updateShowByIMDB = async (showWatchStatus, IMDB, authtoken) =>
+  await axios.put(
+    `${process.env.REACT_APP_API}/user/show-byimdb/${IMDB}`,
+    {showWatchStatus},
+    {
+      headers: {
+        authtoken,
+      },
+    }    
+);
+
+export const getShowsByText = async (text, authtoken) =>
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/search-shows`, 
+    {text}, 
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+

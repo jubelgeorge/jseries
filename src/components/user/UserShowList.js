@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import UserNav from "./UserNav";
-import { getShows, removeShow } from "../../functions/user";
+import { getShows, removeShow, getShowsByText } from "../../functions/user";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import Spinner from '../layout/Spinner';
@@ -24,6 +24,13 @@ const UserShowList = ({history}) => {
     loadAllShows();
   }, []);
 
+  useEffect(() => {
+    const delayed = setTimeout(() => {
+      loadAllSearchedShows();
+    }, 300);
+    return () => clearTimeout(delayed);    
+  }, [text]);
+
   const loadAllShows = () => {
     //setLoading(true);
     getShows(user.token)
@@ -34,8 +41,19 @@ const UserShowList = ({history}) => {
     })
   }
 
+  const loadAllSearchedShows = () => {
+    //setLoading(true);
+    console.log(text);
+    getShowsByText(text, user.token)
+    .then((res) =>{
+        //console.log(res);
+        //setLoading(false);
+        setShows(res.data);        
+    })
+  }
+
   const handleChange = (e) => {
-    // setText(e.target.value);
+    setText(e.target.value);
     // setLoading(true);
     // setShows([]);
     // setIMDB(""); 
