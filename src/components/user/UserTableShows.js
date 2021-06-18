@@ -21,6 +21,7 @@ import {
 
 const UserTableShows = () => {
     const [shows, setShows] = useState([]);
+    const [showsList, setShowsList] = useState([]);
     const [loading, setLoading] = useState(false); 
 
     const { user, showList } = useSelector((state) => ({ ...state }));
@@ -28,6 +29,7 @@ const UserTableShows = () => {
     
     useEffect(() => {
         loadAllShows();
+        setShowsList(showList);
     }, []);
 
     const loadAllShows = () => {
@@ -164,7 +166,7 @@ const UserTableShows = () => {
                     </TableHeader>
                 </Table>
 
-                <Table data={showList}>               
+                <Table data={showsList}>               
                     <TableBody>
                         <DataTableCell style={styles.tableBody} getContent={(x) => x.name} />
                         <DataTableCell style={styles.tableBody} getContent={(x) => x.watchStatus} />
