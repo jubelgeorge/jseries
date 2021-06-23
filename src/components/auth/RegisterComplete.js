@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { auth } from "../../firebase";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+
+import { auth } from "../../firebase";
+import Spinner from '../layout/Spinner';
+
+import { toast } from "react-toastify";
+
 import { createOrUpdateUser } from "../../functions/auth";
+
+
 
 const RegisterComplete = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // const { user } = useSelector((state) => ({ ...state }));
   let dispatch = useDispatch();
 
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistration"));
-    // console.log(window.location.href);
-    // console.log(window.localStorage.getItem("emailForRegistration"));
   }, [history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     // validation
     if (!email || !password) {
       toast.error("Email and password is required");
@@ -35,7 +40,7 @@ const RegisterComplete = ({ history }) => {
         email,
         window.location.href
       );
-      //   console.log("RESULT", result);
+   
       if (result.user.emailVerified) {
         // remove user email fom local storage
         window.localStorage.removeItem("emailForRegistration");
@@ -49,6 +54,7 @@ const RegisterComplete = ({ history }) => {
         history.push("/");
         createOrUpdateUser(idTokenResult.token)
           .then((res) => {
+            setLoading(false);
             dispatch({
               type: "LOGGED_IN_USER",
               payload: {
@@ -95,7 +101,14 @@ const RegisterComplete = ({ history }) => {
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h4>Register Complete</h4>
-          {completeRegistrationForm()}
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              {completeRegistrationForm()}
+            </>
+          )}   
+
         </div>
       </div>
     </div>

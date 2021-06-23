@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 const AdminNav = () => (
   <nav>
     <ul className="nav flex-column">
@@ -20,10 +21,16 @@ const AdminNav = () => (
         <Link to="/admin/trending-shows" className="nav-link">
           Trending Shows
         </Link>
+      </li>
+
+      <li className="nav-item">
+        <Link to="/admin/users" className="nav-link">
+          Users
+        </Link>
       </li>      
 
       <li className="nav-item">
-        <Link to="/user/password" className="nav-link">
+        <Link to="/admin/password" className="nav-link">
           Password
         </Link>
       </li>

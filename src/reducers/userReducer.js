@@ -8,4 +8,3 @@ export const userReducer = (state = null, action) => {
         return state;
     }
 };
-  

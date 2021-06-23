@@ -7,4 +7,3 @@ export const getSearchShows = async (arg) => {
       arg      
   );
 };
-

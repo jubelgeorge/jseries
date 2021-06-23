@@ -5,10 +5,9 @@ import pic from "../../img/404-pic2.jpg";
 const NotFound = () => {
   return (
     <Fragment>
-      <h1>
+      <h1 className="pl-4 pt-2">
         <i className='fas fa-exclamation-triangle' /> Page Not Found
       </h1>
-      {/* <p>Sorry, this page does not exist</p> */}
       <img className="p-4" src={pic} style={{height: "500px"}} />
     </Fragment>
   );

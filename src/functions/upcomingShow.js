@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const getUpcomingShows = async () =>
   await axios.get(`${process.env.REACT_APP_API}/upcoming-shows`);
 
@@ -20,4 +21,3 @@ export const createUpcomingShow = async (formData, authtoken) =>
       },
     }
   );
-

@@ -2,13 +2,12 @@ import React, {useState, useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import UserNav from "./UserNav";
-import { getShows, removeShow } from "../../functions/user";
-import { DeleteOutlined, DownloadOutlined } from "@ant-design/icons";
 import Spinner from '../layout/Spinner';
+import _ from "lodash";
+
+import { DeleteOutlined, DownloadOutlined } from "@ant-design/icons";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { toast } from "react-toastify";
-import _ from "lodash";
-import UserShowPDFDocument from "./UserShowPDFDocument";
 import { Document, Page, Text, StyleSheet } from "@react-pdf/renderer";
 import {
   Table,
@@ -18,66 +17,75 @@ import {
   DataTableCell,
 } from "@david.kucsai/react-pdf-table";
 
+import { getShows, removeShow } from "../../functions/user";
+
+
 
 const UserTableShows = () => {
     const [shows, setShows] = useState([]);
     const [loading, setLoading] = useState(false); 
 
-    const { user, showList } = useSelector((state) => ({ ...state }));
+    const { user } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
     
     useEffect(() => {
         loadAllShows();
     }, []);
 
-    const loadAllShows = () => {
-        //setLoading(true);
-        getShows(user.token)
-        .then((res) =>{
-            //console.log(res);
-            //setLoading(false);
-            setShows(res.data);        
-        })
+    const loadAllShows = async () => {
+        try {
+            setLoading(true);
+            //getShows(user.token)
+            // .then((res) =>{
+            //     //console.log(res);
+            //     //setLoading(false);
+            //     setShows(res.data);        
+            // })
+
+            const response = await getShows(user.token);
+            setShows(response.data);    
+            setLoading(false);  
+        
+        } catch (err) {
+            console.log(err);
+        }   
     } 
 
-    const handleRemoveFromList = (s) => {
-        //console.log(e);
-        const IMDB = s.imdb;
-        if(window.confirm("Delete show?")){
-          removeShow(IMDB, user.token)
-            .then((res) => {
-            //console.log(res.data);
-              getShows(user.token)
-                .then((res1) =>{
-                  //console.log(res);
-                  //setLoading(false);
-                  setShows(res1.data);        
+    const handleRemoveFromList = async (s) => {
+        try {
+            setLoading(true);
+            const IMDB = s.imdb;
+            if(window.confirm("Delete show?")){
+              const response1 = await removeShow(IMDB, user.token);
+              const response2 = await getShows(user.token);
+              setShows(response2.data);   
+      
+              if (typeof window !== "undefined") {
+                // if show is in local storage GET it
+                if (typeof window !== 'undefined') {
+                  localStorage.removeItem('userShowList');
+                }
                 
-                  let showList1 = []; 
-                  if (typeof window !== "undefined") {
-                    // if show is in local storage GET it
-                    if (typeof window !== 'undefined') {
-                      localStorage.removeItem('userShowList');
-                    }
-                    
-                    // remove duplicates
-                    let unique = _.uniqWith(res1.data, _.isEqual);
-                    // save to local storage
-                    // console.log('unique', unique)
-                    localStorage.setItem('userShowList', JSON.stringify(unique));
-            
-                    // add to redux state
-                    dispatch({
-                      type: "ADD_TO_LIST",
-                      payload: unique
-                    });
-                  }
-              })
-            
-              toast.success(`"${res.data.name}" show is removed from your list!`);
-            })
-            .catch((err) => console.log("Remove show err", err));
-        }        
+                // remove duplicates
+                let unique = _.uniqWith(response2.data, _.isEqual);
+      
+                // save to local storage
+                localStorage.setItem('userShowList', JSON.stringify(unique));
+        
+                // add to redux state
+                dispatch({
+                  type: "ADD_TO_LIST",
+                  payload: unique
+                });
+              }
+              toast.success(`"${response1.data.name}" show is removed from your list!`);
+            } 
+            setLoading(false);  
+        
+          } catch (err) {
+              toast.error("Remove show err", err);
+              setLoading(false);
+          }               
     };  
     
     
@@ -197,41 +205,44 @@ const UserTableShows = () => {
                     <UserNav />
                 </div>
                 <div className="col-md-10">
+                    <h4 className="text-danger">Table of Shows</h4>
                     {loading ? (
                         <Spinner />
-                        ) : (
-                        <h4 className="text-danger">Table of Shows</h4>
+                    ) : (
+                        <>
+                            <p>Total no. of Shows: <b>{shows.length}</b></p>
+
+                            {downloadShowsPDF()}
+                            <br />
+                            
+                            <table className="table table-bordered">
+                                <thead className="thead-light">
+                                <tr>
+                                    <th scope="col">Sl.No.</th>
+                                    <th scope="col">Name of Show</th>
+                                    <th scope="col">Watch Status</th>                
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {shows.map((s) => (
+                                    <tr key={s._id}>
+                                    {handleShowNumber()}
+                                        <td>{n}</td>
+                                        <td>{s.name}</td>
+                                        <td>{s.watchStatus}</td>                                         
+                                        <td>
+                                            <a onClick={(e => handleRemoveFromList(s))}>
+                                                <DeleteOutlined className="text-danger" /> <br />
+                                            </a> 
+                                        </td>
+                                    </tr>                            
+                                ))}
+                                </tbody>
+                            </table>
+                        </>
                     )}             
-                
-                    <h4>{shows.length} Shows</h4>
-                    {downloadShowsPDF()}
-                    <br />
-                    
-                    <table className="table table-bordered">
-                        <thead className="thead-light">
-                        <tr>
-                            <th scope="col">Sl.No.</th>
-                            <th scope="col">Name of Show</th>
-                            <th scope="col">Watch Status</th>                
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {shows.map((s) => (
-                            <tr key={s._id}>
-                            {handleShowNumber()}
-                                <td>{n}</td>
-                                <td>{s.name}</td>
-                                <td>{s.watchStatus}</td>                                         
-                                <td>
-                                    <a onClick={(e => handleRemoveFromList(s))}>
-                                        <DeleteOutlined className="text-danger" /> <br />
-                                    </a> 
-                                </td>
-                            </tr>                            
-                        ))}
-                        </tbody>
-                    </table>
+      
                 </div>
             </div>
         </div>
@@ -239,4 +250,3 @@ const UserTableShows = () => {
 };
 
 export default UserTableShows;
-

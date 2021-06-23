@@ -10,7 +10,7 @@ export const addShow = async (show, authtoken) =>
         authtoken,
       },
     }
-  );
+);
 
 export const getShows = async (authtoken) =>
   await axios.get(`${process.env.REACT_APP_API}/user/shows`, {
@@ -68,5 +68,36 @@ export const getShowsByText = async (text, authtoken) =>
         authtoken,
       },
     }
-  );
+);
 
+export const getLoggedInUser = async (authtoken) =>
+  await axios.get(`${process.env.REACT_APP_API}/user`, {
+    headers: {
+      authtoken,
+    },
+});
+
+export const updateLoggedInUserProfile = async (userProfileStatus, authtoken) =>
+  await axios.put(
+    `${process.env.REACT_APP_API}/user`,
+    {userProfileStatus},
+    {
+      headers: {
+        authtoken,
+      },
+    }    
+);
+
+export const getUsers = async (authtoken) =>
+  await axios.get(`${process.env.REACT_APP_API}/users`, {
+    headers: {
+      authtoken,
+    },
+});
+
+export const getUserShows = async (userId, authtoken) =>
+  await axios.get(`${process.env.REACT_APP_API}/user/${userId}`, {
+    headers: {
+      authtoken,
+    },
+});  

@@ -1,20 +1,16 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+
+import Spinner from '../layout/Spinner';
 
 import { Carousel } from 'antd';
 
 import {getUpcomingShows} from "../../functions/upcomingShow";
 import {getTrendingShows} from "../../functions/trendingShow";
 
-import Spinner from '../layout/Spinner';
-
-// import { Carousel } from "react-responsive-carousel";
-// import "react-responsive-carousel/lib/styles/carousel.min.css";
-
 const contentStyle = {
   height: '500px',
-  //width: '500px',
   color: '#fff',
   lineHeight: '160px',
   textAlign: 'center',
@@ -39,113 +35,100 @@ const Landing = () => {
     loadAllTrendingShows();
   }, []);
 
-  const loadAllUpcomingShows = () => {
-    setLoading(true);
-    getUpcomingShows()
-    .then((res) =>{
-        //console.log(res);
-        setLoading(false);
-        setUpcomingShows(res.data);
-    })
+  const loadAllUpcomingShows = async () => {
+    try {
+      setLoading(true);
+
+      // getUpcomingShows()
+      // .then((res) =>{
+      //     setLoading(false);
+      //     setUpcomingShows(res.data);
+      // })
+
+      const response = await getUpcomingShows();
+      setUpcomingShows(response.data);
+      setLoading(false);  
+  
+    } catch (err) {
+      console.log(err);
+    }      
   }
 
-  const loadAllTrendingShows = () => {
-    setLoading(true);
-    getTrendingShows()
-    .then((res) =>{
-        //console.log(res);
-        setLoading(false);
-        setTrendingShows(res.data);
-    })
+  const loadAllTrendingShows = async () => {
+    try {
+      setLoading(true);
+
+      // getTrendingShows()
+      // .then((res) =>{
+      //     setLoading(false);
+      //     setTrendingShows(res.data);
+      // })
+
+      const response = await getTrendingShows();
+      setTrendingShows(response.data);
+      setLoading(false);  
+  
+    } catch (err) {
+      console.log(err);
+    }    
   }
 
   return (
-  <div> 
-    <section className='landing'>
-        <div className='dark-overlay'>
-          <div className='landing-inner'>
-            <h1 className='x-large' style={{color: "#fff"}}>Welcome to JSeries!</h1>
-            <p className='lead'>
-            Browse web & tv series, add the ones you have watched onto your list
-            </p>
-            <div className='buttons'>
-            {user && user.role ==="subscriber" ?
-                <Link to='/search-shows' className='btn btn-primary'>
-                  Search for Shows
-                </Link>
-              :
-                <Fragment>
-                  <Link to='/register' className='btn btn-primary'>
-                    Sign Up
+    <div> 
+      <section className='landing'>
+          <div className='dark-overlay'>
+            <div className='landing-inner'>
+              <h1 className='x-large' style={{color: "#fff"}}>Welcome to JSeries!</h1>
+              <p className='lead' style={{color: "orange"}}> 
+                Browse web & tv series, add the ones you have watched onto your list.
+              </p>
+              <div className='buttons'>
+              {user && user.role ==="subscriber" ?
+                  <Link to='/shows' className='btn btn-primary'>
+                    Shows List
                   </Link>
-                  <Link to='/login' className='btn btn-warning'>
-                    Login
+                :
+                  <Link to='/search-shows' className='btn btn-primary'>
+                    Search for Shows
                   </Link>
-                </Fragment>
-              }
-              
+                }              
+              </div>
             </div>
           </div>
-        </div>
-    </section>   
+      </section>   
 
-    <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-        Most Anticipated Upcoming TV Shows
-    </h4>
-    {loading ? (
-      <Spinner />
-      ) : (
-      <Carousel autoplay className="pr-5 pl-5">
-        {upcomingShows.map((u) => (
-          <div key={u._id}>
-            <img style={contentStyle} src={`/uploads/${u.image}`} />      
-          </div>
-        ))}
-      </Carousel>
-    )}
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+          Most Anticipated Upcoming TV Shows
+      </h4>
+      {loading ? (
+        <Spinner />
+        ) : (
+        <Carousel autoplay className="pr-5 pl-5">
+          {upcomingShows.map((u) => (
+            <div key={u._id}>
+              <img style={contentStyle} src={`/uploads/${u.image}`} />      
+            </div>
+          ))}
+        </Carousel>
+      )}    
 
-    {/* {loading ? (
-      <Spinner />
-      ) : (
-      <Carousel showArrows={true} autoPlay infiniteLoop>
-        {upcomingShows.map((u) => (          
-            <img key={u._id} src={`/uploads/${u.image}`} />    
-        ))}
-      </Carousel>
-    )} */}
-    
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+          Most Trending Shows
+      </h4>
+      {loading ? (
+        <Spinner />
+        ) : (
+        <Carousel autoplay className="pr-5 pl-5">
+          {trendingShows.map((t) => (
+            <div key={t._id}>
+              <img style={contentStyle} src={`/uploads/${t.image}`} />      
+            </div>
+          ))}
+        </Carousel>
+      )}
 
-    <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-        Most Trending Shows
-    </h4>
-    {loading ? (
-      <Spinner />
-      ) : (
-      <Carousel autoplay className="pr-5 pl-5">
-        {trendingShows.map((t) => (
-          <div key={t._id}>
-            <img style={contentStyle} src={`/uploads/${t.image}`} />      
-          </div>
-        ))}
-      </Carousel>
-    )}
-
-    {/* {loading ? (
-      <Spinner />
-      ) : (
-      <Carousel showArrows={true} autoPlay infiniteLoop className="pr-5 pl-5">
-        {trendingShows.map((t) => (          
-            <img key={t._id} src={`/uploads/${t.image}`} /> 
-        ))}
-      </Carousel>
-    )} */}
-
-  </div>
+    </div>
   );
 };
 
 export default Landing;
-
-
-
-

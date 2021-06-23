@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const getTrendingShows = async () =>
   await axios.get(`${process.env.REACT_APP_API}/trending-shows`);
 
@@ -20,4 +21,3 @@ export const createTrendingShow = async (formData, authtoken) =>
       },
     }
   );
-

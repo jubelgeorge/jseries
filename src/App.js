@@ -11,9 +11,9 @@ import { useDispatch } from "react-redux";
 // import Landing from './components/layout/Landing';
 // import Routes from './components/routing/Routes';
 // import Footer from './components/layout/Footer';
+
 //using lazy
 const Navbar = lazy(() => import('./components/layout/nav/Navbar'));
-// const SideDrawer = lazy(() => import("./components/layout/SideDrawer"));
 const Landing = lazy(() => import( './components/layout/Landing'));
 const Routes = lazy(() => import('./components/routing/Routes'));
 const Footer = lazy(() => import('./components/layout/Footer'));
@@ -45,14 +45,13 @@ const App = () => {
     <Suspense
       fallback={
         <div className="col text-center p-5">
-          __ React Redux JS
+          __ JS
           <LoadingOutlined />
           eries __
         </div>
       }
     >
       <Navbar />
-      {/* <SideDrawer /> */}
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Landing} />

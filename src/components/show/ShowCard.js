@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-
-import { Card } from "antd";
-import { EyeOutlined, PlusOutlined } from "@ant-design/icons";
-import pic from "../../img/tvseries.jpg";
+import React from "react";
 import { Link } from "react-router-dom";
 
+import pic from "../../img/tvseries.jpg";
+
+import { Card } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
+
 const { Meta } = Card;
+
 
 
 export const ShowCardMultiple = ({ show }) => {
@@ -18,64 +20,50 @@ export const ShowCardMultiple = ({ show }) => {
   else 
     var image = show1.image.original;
   
-  const { externals, url, name, premiered } = show1;
+  const { externals, name, premiered } = show1;
   const {imdb} = externals;   
 
   return (
     <>      
-      <Card
-        cover={
-          <img
-            src={image && image.length ? image : pic}
-            style={{ height: "250px", objectFit: "fit" }}
-            className="p-1"
+      {imdb ? 
+        <Card
+          cover={
+            <img
+              src={image && image.length ? image : pic}
+              style={{ height: "300px", objectFit: "fit" }}
+              className="p-1"
+            />
+          }
+          actions={[
+            <Link to={`/show/${imdb}`}>
+              <EyeOutlined className="text-warning" /> <br /> View Show
+            </Link>          
+          ]}
+        >
+          <Meta
+            title={`${name}`}
+            description={`${premiered}`}
           />
-        }
-        actions={[
-          <Link to={`/show/${imdb}`}>
-            <EyeOutlined className="text-warning" /> <br /> View Show
-          </Link>          
-        ]}
-      >
-        <Meta
-          title={`${name} - ${premiered}`}
-          description={`${url}`}
-        />
-      </Card>
+        </Card>
+        :
+          <Card
+          cover={
+            <img
+              src={image && image.length ? image : pic}
+              style={{ height: "300px", objectFit: "fit" }}
+              className="p-1"
+            />
+          }
+          actions={[
+            <p>Cannot View Show</p>      
+          ]}
+        >
+          <Meta
+            title={`${name}`}
+            description={`${premiered}`}
+          />
+        </Card>
+      }
     </>
   );
 };
-
-export const ShowCardSingleIMDB = ({ show, IMDB }) => {
-  const [tooltip, setTooltip] = useState("Click to add");
-      
-  const { id, url, name, premiered } = show;
-  const imdb = IMDB;
-  console.log(imdb);
-  
-  return (
-    <>      
-      <Card
-        cover={
-          <img
-            src={show.image && show.image.length && show.image.original ? show.image.original : pic}
-            style={{ height: "250px", width:"250px", objectFit: "fit" }}
-            className="p-1"
-          />
-        }
-        actions={[
-          <Link to={`/show/${imdb}`}>
-            <EyeOutlined className="text-warning" /> <br /> View Show
-          </Link>          
-        ]}
-      >
-        <Meta
-          title={`${name} - ${premiered}`}
-          description={`${url}`}
-        />
-      </Card>
-    </>
-  );
-};
-
-

@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { auth } from "../../firebase";
-import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+
+import { auth } from "../../firebase";
+import Spinner from '../layout/Spinner';
+
+import { toast } from "react-toastify";
+
+
 
 const Register = ({ history }) => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { user } = useSelector((state) => ({ ...state }));
 
@@ -14,13 +20,15 @@ const Register = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("ENV --->", process.env.REACT_APP_REGISTER_REDIRECT_URL);
+    setLoading(true);
+
     const config = {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
     };
 
     await auth.sendSignInLinkToEmail(email, config);
+    setLoading(false);
     toast.success(
       `Email is sent to ${email}. Click the link to complete your registration.`
     );
@@ -53,7 +61,15 @@ const Register = ({ history }) => {
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h4>Register</h4>
-          {registerForm()}
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              {registerForm()}
+            </>
+          )}        
+
+          
         </div>
       </div>
     </div>

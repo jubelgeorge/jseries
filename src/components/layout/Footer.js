@@ -1,15 +1,16 @@
 import React from 'react';
+
 import { SocialIcon } from 'react-social-icons';
 
 
-const Footer = () => (
-    
+const Footer = () => (    
         <div className = "footer-dark">
             <footer className= "footer1">
                 <div className="item">
                     <h3>Services</h3>
                         <ul>
-                            <li><a href="#">Search for web & tv series</a></li>                            
+                            <li><a href="/search-shows">Search for Web & Tv series</a></li>
+                            <li><a href="/shows">Maintain Series List</a></li>                            
                         </ul>
                 </div>
                 
@@ -21,11 +22,8 @@ const Footer = () => (
                 </div> 
                 <p className="copyright">&copy; Copyright {new Date().getFullYear()} Jubel George @JSeries</p>
                         
-                
             </footer>
-        </div>
-    
+        </div>    
 );
 
 export default Footer;
-

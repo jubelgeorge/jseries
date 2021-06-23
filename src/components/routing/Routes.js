@@ -36,12 +36,18 @@ const AdminRoute = lazy(() => import("./AdminRoute"));
 const AdminDashboard = lazy(() => import("../admin/AdminDashboard"));
 const UpcomingShows = lazy(() => import("../admin/UpcomingShows"));
 const TrendingShows = lazy(() => import("../admin/TrendingShows"));
+const UsersListAdmin = lazy(() => import("../admin/UsersListAdmin"));
+const SingleUserShowList = lazy(() => import("../admin/SingleUserShowList"));
+const PasswordChangeAdmin = lazy(() => import("../admin/PasswordChangeAdmin"));
 
 const UserRoute = lazy(() => import("./UserRoute"));
 const UserDashboard = lazy(() => import("../user/UserDashboard"));
 const UserShowList = lazy(() => import("../user/UserShowList"));
 const UserWatchStatusUpdate = lazy(() => import("../user/UserWatchStatusUpdate"));
 const UserTableShows = lazy(() => import("../user/UserTableShows"));
+const UsersList = lazy(() => import("../user/UsersList"));
+const SingleUserShowsList = lazy(() => import("../user/SingleUserShowsList"));
+const PasswordChange = lazy(() => import("../user/PasswordChange"));
 
 
 const NotFound = lazy(() => import('../layout/NotFound'));
@@ -50,7 +56,6 @@ const NotFound = lazy(() => import('../layout/NotFound'));
 const Routes = props => {
     return (
       <Fragment>
-        {/* <Alert /> */}
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/complete-registration" component={RegisterComplete} />
@@ -63,11 +68,17 @@ const Routes = props => {
           <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
           <AdminRoute exact path="/admin/upcoming-shows" component={UpcomingShows} />
           <AdminRoute exact path="/admin/trending-shows" component={TrendingShows} />
+          <AdminRoute exact path="/admin/users" component={UsersListAdmin} />
+          <AdminRoute exact path="/admin/user/:id" component={SingleUserShowList} />
+          <AdminRoute exact path="/admin/password" component={PasswordChangeAdmin} />
 
           <UserRoute exact path="/dashboard" component={UserDashboard} /> 
           <UserRoute exact path="/shows" component={UserShowList} /> 
           <UserRoute exact path="/show/edit-watch-status/:id" component={UserWatchStatusUpdate} />
           <UserRoute exact path="/shows/table" component={UserTableShows} />
+          <UserRoute exact path="/users" component={UsersList} />
+          <UserRoute exact path="/user/:id" component={SingleUserShowsList} />
+          <UserRoute exact path="/password" component={PasswordChange} />
           
           <Route component={NotFound} /> 
         </Switch>

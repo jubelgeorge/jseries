@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 import { auth, googleAuthProvider } from "../../firebase";
+import Spinner from '../layout/Spinner';
+
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 import { createOrUpdateUser } from "../../functions/auth";
 
-import Spinner from '../layout/Spinner';
 
 
 const Login = ({ history }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("jubelbaby@gmail.com");
+  const [password, setPassword] = useState("123456");
   const [loading, setLoading] = useState(false);
 
   const { user } = useSelector((state) => ({ ...state }));
@@ -45,10 +48,9 @@ const Login = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // console.table(email, password);
+
     try {
       const result = await auth.signInWithEmailAndPassword(email, password);
-      // console.log(result);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
 
@@ -68,7 +70,6 @@ const Login = ({ history }) => {
         })
         .catch((err) => console.log(err));
 
-      // history.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -97,7 +98,6 @@ const Login = ({ history }) => {
             roleBasedRedirect(res);
           })
           .catch((err) => console.log(err));
-        // history.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -148,28 +148,31 @@ const Login = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
+          <h4>Login</h4>
           {loading ? (
             <Spinner />
           ) : (
-            <h4>Login</h4>
+            <>
+              {loginForm()}
+
+              <Button
+                onClick={googleLogin}
+                type="danger"
+                className="mb-3"
+                block
+                shape="round"
+                icon={<GoogleOutlined />}
+                size="large"
+              >
+                Login with Google
+              </Button>
+
+              <Link to="/forgot-password" className="float-right text-danger">
+                Forgot Password
+              </Link>
+            </>
           )}
-          {loginForm()}
-
-          <Button
-            onClick={googleLogin}
-            type="danger"
-            className="mb-3"
-            block
-            shape="round"
-            icon={<GoogleOutlined />}
-            size="large"
-          >
-            Login with Google
-          </Button>
-
-          <Link to="/forgot-password" className="float-right text-danger">
-            Forgot Password
-          </Link>
+          
         </div>
       </div>
     </div>
@@ -177,6 +180,3 @@ const Login = ({ history }) => {
 };
 
 export default Login;
-
-
-
