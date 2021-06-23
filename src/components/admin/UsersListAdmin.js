@@ -25,18 +25,6 @@ const UserTableShows = () => {
     const loadAllUsers = async () => {
         try {
             setLoading(true);
-
-            // getUsers(user.token)
-            // .then((res) =>{
-            //     //console.log(res.data);
-            //     //setLoading(false);
-            //     const resultantUsersWithoutAdminUser = res.data.filter(u => {
-            //         return u.role === 'subscriber'
-            //     })
-            //     //console.log(result);
-            //     setUsers(resultantUsersWithoutAdminUser);        
-            // })
-
             const response = await getUsers(user.token);
             const resultantUsersWithoutAdminUser = response.data.filter(u => {
                 return u.role === 'subscriber'
@@ -52,21 +40,6 @@ const UserTableShows = () => {
     const handleRemoveUserFromList = async (u) => {
         try {
             const userId = u._id;
-            // if(window.confirm("Delete user?")){
-            // removeUser(userId, user.token)
-            //     .then((res) => {
-            //     //console.log(res.data);
-            //     getUsers(user.token)
-            //         .then((res1) =>{
-            //         //console.log(res);
-            //         //setLoading(false);
-            //         setUsers(res1.data);        
-            //     })
-                
-            //     toast.success(`"${res.data.name}" user is removed!`);
-            //     })
-            //     .catch((err) => console.log("Remove user err", err));
-            // }        
     
             if (window.confirm("Delete?")) {
               setLoading(true);

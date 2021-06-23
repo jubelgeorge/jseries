@@ -35,13 +35,6 @@ const UserTableShows = () => {
     const loadAllShows = async () => {
         try {
             setLoading(true);
-            //getShows(user.token)
-            // .then((res) =>{
-            //     //console.log(res);
-            //     //setLoading(false);
-            //     setShows(res.data);        
-            // })
-
             const response = await getShows(user.token);
             setShows(response.data);    
             setLoading(false);  

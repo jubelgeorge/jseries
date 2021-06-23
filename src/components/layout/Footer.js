@@ -3,6 +3,7 @@ import React from 'react';
 import { SocialIcon } from 'react-social-icons';
 
 
+
 const Footer = () => (    
         <div className = "footer-dark">
             <footer className= "footer1">

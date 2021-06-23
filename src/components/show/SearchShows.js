@@ -33,16 +33,6 @@ const SearchShows = () => {
         setLoading(false);
       }
 
-      // getSearchShows(arg)
-      //   .then((res) => {
-      //     setLoading(false);
-      //     setShows(res.data);
-          
-      //     if(searchRadioOption==="single" || searchRadioOption==="imdb") {
-      //       setIMDB(res.data.externals.imdb);          
-      //     }
-      //   });
-
       const response = await getSearchShows(arg);
       setShows(response.data);
       setLoading(false);  

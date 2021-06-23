@@ -29,30 +29,6 @@ const UserDashboard = () => {
   const setShowsToLocalStorage = async () => {
     try {
       setLoading(true);
-      //getShows(user.token)
-      // .then((res) =>{
-      //     if (typeof window !== 'undefined') {
-      //       localStorage.setItem('userShowList', JSON.stringify(res.data));          
-      //     }
-      //     //setLoading(false);
-      //     setShows(res.data); 
-          
-          
-      //     const alreadyWatchedShows1 = res.data.filter(s => {
-      //       return s.watchStatus === 'Already Watched'
-      //     });
-      //     setAlreadyWatchedShows(alreadyWatchedShows1);
-      
-      //     const currentlyWatchingShows1 = res.data.filter(s => {
-      //       return s.watchStatus === 'Currently Watching'
-      //     });
-      //     setCurrentlyWatchingShows(currentlyWatchingShows1);
-      
-      //     const notYetWatchedShows1 = res.data.filter(s => {
-      //       return s.watchStatus === 'Not Yet Watched'
-      //     });
-      //     setNotYetWatchedShows(notYetWatchedShows1);    
-      // })
 
       const response = await getShows(user.token);
       if (typeof window !== 'undefined') {
@@ -85,11 +61,6 @@ const UserDashboard = () => {
   const loadUser = async () => {
     try {
       setLoading(true);
-      // getLoggedInUser(user.token)
-      //   .then((res) => {
-      //     setProfileStatus(res.data.profileStatus);
-      // });
-
       const response = await getLoggedInUser(user.token);
       setProfileStatus(response.data.profileStatus);
       setLoading(false);  
@@ -104,11 +75,7 @@ const UserDashboard = () => {
       setLoading(true);
       const userProfileStatus = e.target.value;
       setProfileStatus(userProfileStatus);
-      // updateLoggedInUserProfile(userProfileStatus, user.token)
-      //   .then((res) => {
-      //     loadUser();
-      //   })
-
+  
       const response = await updateLoggedInUserProfile(userProfileStatus, user.token);
       loadUser();
       setLoading(false);  

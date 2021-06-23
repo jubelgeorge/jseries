@@ -26,13 +26,6 @@ const SingleUserShowList = ({ match, history }) => {
     const loadSingleUserShows = async () => {
         try {
             setLoading(true);
-            // getUserShows(id, user.token)
-            // .then((res) =>{
-            //     //console.log(res);
-            //     //setLoading(false);
-            //     setUserShows(res.data);        
-            // })
-
             const response = await getUserShows(id, user.token);
             setUserShows(response.data); 
             setLoading(false);  

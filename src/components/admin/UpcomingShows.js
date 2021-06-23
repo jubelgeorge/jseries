@@ -31,12 +31,6 @@ const UpcomingShows = () => {
       try {
         setLoading(true);
 
-        // getTrendingShows()
-        // .then((res) =>{
-        //     //console.log(res);
-        //     setTrendingShows(res.data);
-        // })
-
         const response = await getUpcomingShows();
         setUpcomingShows(response.data); 
         setLoading(false);  
@@ -56,16 +50,6 @@ const UpcomingShows = () => {
         
         formData.append('name', name);   
 
-        // createTrendingShow(formData, user.token)
-        // .then((res) => {
-        //     setLoading(false);
-        //     loadAllTrendingShows(); 
-        //     setName("");
-        //     setImage("");
-        //     toast.success(`"${res.data.name}" trending show is created`);
-        // })
-        // .catch((err) => console.log("create trending show err", err));
-
         const response = await createUpcomingShow(formData, user.token);
         loadAllUpcomingShows(); 
         setName("");
@@ -81,17 +65,6 @@ const UpcomingShows = () => {
 
     const handleRemove = async (upcomingShowId) => {
       try {
-        // if (window.confirm("Delete?")) {
-        //   setLoading(true);
-        //   removeTrendingShow(trendingShowId, user.token)
-        //       .then((res) => {
-        //       loadAllTrendingShows(); // load all trending shows
-        //       setLoading(false);
-        //       toast.error(`Trending Show "${res.data.name}" deleted`);
-        //       })
-        //       .catch((err) => console.log(err));
-        // }
-
         if (window.confirm("Delete?")) {
           setLoading(true);
           const response = await removeUpcomingShow(upcomingShowId, user.token);                    

@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Route } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Route } from "react-router-dom";
+
 import LoadingToRedirect from "./LoadingToRedirect";
+
 import { currentAdmin } from "../../functions/auth";
+
+
 
 const AdminRoute = ({ children, ...rest }) => {
   const { user } = useSelector((state) => ({ ...state }));

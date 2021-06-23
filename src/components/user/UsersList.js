@@ -21,19 +21,9 @@ const UserTableShows = () => {
     
     const loadAllUsers = async () => {
         try {
-            setLoading(true);
-            //getUsers(user.token)
-            // .then((res) =>{
-            //     console.log(res.data);
-            //     //setLoading(false);
-            //     const resultantUsersWithoutLoggedInUser = res.data.filter(u => {
-            //         return u.email != user.email
-            //     })
-            //     console.log(resultantUsersWithoutLoggedInUser);
-            //     setUsers(resultantUsersWithoutLoggedInUser);        
-            // })
-      
+            setLoading(true);      
             const response = await getUsers(user.token); 
+            
             const resultantUsersWithoutLoggedInUser = response.data.filter(u => {
                 return u.email != user.email
             })

@@ -28,14 +28,6 @@ const UserWatchStatusUpdate = ({ match }) => {
     const loadShow = async (id) => {
       try {
         setLoading(true);
-        // getShow(id, user.token)
-        //   .then((res) => {
-        //     //console.log("RES",res.data);
-        //     setLoading(false);
-        //     setShow(res.data);
-        //     setWatchStatus(res.data.watchStatus);
-        // });
-
         const response = await getShow(id, user.token);
         setShow(response.data);
         setWatchStatus(response.data.watchStatus);
@@ -52,30 +44,6 @@ const UserWatchStatusUpdate = ({ match }) => {
         const showWatchStatus = e.target.value;
         const showId = show._id;
         setWatchStatus(showWatchStatus);
-        // updateShow(showWatchStatus, showId, user.token)
-        //   .then((res) => {
-        //     //console.log(res);
-        //     loadShow();
-        //     getShows(user.token)
-        //       .then((res1) =>{
-            
-        //         if (typeof window !== "undefined") {
-        //           // if show is in local storage GET it
-        //           if (typeof window !== 'undefined') {
-        //             localStorage.removeItem('userShowList');
-        //           }
-        //           // save to local storage
-        //           localStorage.setItem('userShowList', JSON.stringify(res1.data));
-          
-        //           // add to redux state
-        //           dispatch({
-        //             type: "ADD_TO_LIST",
-        //             payload: res1.data
-        //           });
-        //         }
-        //     })
-        // })
-
         const response1 = await updateShow(showWatchStatus, showId, user.token);
         loadShow();
         const response2 = await getShows(user.token);

@@ -43,11 +43,6 @@ const Show = ({ match }) => {
   const loadShow = async (arg) => {
     try {
       setLoading(true);
-      // getSearchShows(arg)
-      // .then((res) => {
-      //     setLoading(false);
-      //     setShow(res.data);
-      // });
 
       const response = await getSearchShows(arg); 
       setShow(response.data);
@@ -80,38 +75,6 @@ const Show = ({ match }) => {
   const handleAddToList = async (show1) => {
     try {
       setLoading(true);
-      //addShow({show:show1}, user.token)
-      // .then((res) => {
-      //   //console.log(res.data);
-      //   let showList1 = []; 
-      //   if (typeof window !== "undefined") {
-      //     // if show is in local storage GET it
-      //     if (localStorage.getItem('userShowList')) {
-      //       showList1 = JSON.parse(localStorage.getItem('userShowList'));
-      //     }
-      //     // push new show to cart
-      //     showList1.push({
-      //       ...res.data
-      //     });
-      //     // remove duplicates
-      //     let unique = _.uniqWith(showList1, _.isEqual);
-      //     // save to local storage
-      //     // console.log('unique', unique)
-      //     localStorage.setItem('userShowList', JSON.stringify(unique));
-      //     // show tooltip
-      //     setTooltip("Added");
-    
-      //     // add to redux state
-      //     dispatch({
-      //       type: "ADD_TO_LIST",
-      //       payload: unique
-      //     });
-      //   }
-      //   setShowAdded(true);
-      //   setVisible(true);
-      //   toast.success(`"${res.data.name}"  show is added to your list!`);
-      // })
-      // .catch((err) => console.log("Add show err", err));
 
       const response = await addShow({show:show1}, user.token); 
       let showList1 = []; 
@@ -152,38 +115,6 @@ const Show = ({ match }) => {
     try {
       setLoading(true);
       const IMDB = show.externals.imdb;
-    //removeShow(IMDB, user.token)
-      // .then((res) => {
-      //   getShows(user.token)
-      //     .then((res1) =>{
-      //       //setLoading(false);
-      //       setShows(res1.data);        
-          
-      //       if (typeof window !== "undefined") {
-      //         // if show is in local storage GET it
-      //         if (typeof window !== 'undefined') {
-      //           localStorage.removeItem('userShowList');
-      //         }
-              
-      //         // remove duplicates
-      //         let unique = _.uniqWith(res1.data, _.isEqual);
-      //         // save to local storage
-      //         localStorage.setItem('userShowList', JSON.stringify(unique));
-      
-      //         // add to redux state
-      //         dispatch({
-      //           type: "ADD_TO_LIST",
-      //           payload: unique
-      //         });
-      //         setShowAdded(false);
-      //         setTooltip("Click To Add");
-      //       }
-      //   })
-        
-        
-      //   toast.success(`"${res.data.name}" show is removed from your list!`);
-      // })
-      // .catch((err) => console.log("Remove show err", err));
 
       const response1 = await removeShow(IMDB, user.token); 
       const response2 = await getShows(user.token); 
@@ -223,28 +154,7 @@ const Show = ({ match }) => {
       setLoading(true);
       const showWatchStatus = e.target.value;
       setWatchStatus(showWatchStatus);
-      // updateShowByIMDB(showWatchStatus, imdb, user.token)
-      //   .then((res) => {
-      //     //console.log(res);
-      //     getShows(user.token)
-      //       .then((res1) =>{        
-      //         if (typeof window !== "undefined") {
-      //           // if show is in local storage GET it
-      //           if (typeof window !== 'undefined') {
-      //             localStorage.removeItem('userShowList');
-      //           }
-      //           // save to local storage
-      //           localStorage.setItem('userShowList', JSON.stringify(res1.data));
-        
-      //           // add to redux state
-      //           dispatch({
-      //             type: "ADD_TO_LIST",
-      //             payload: res1.data
-      //           });
-      //         }
-      //     })
-      // })
-
+    
       const response1 = await updateShowByIMDB(showWatchStatus, imdb, user.token); 
       const response2 = await getShows(user.token);
       

@@ -20,15 +20,6 @@ const AdminDashboard = () => {
   const loadAllUsers = async () => {
     try {
       setLoading(true);
-      // getUsers(user.token)
-      //   .then((res) =>{
-      //     setLoading(false);
-      //     const resultantUsersWithoutAdminUser = res.data.filter(u => {
-      //       return u.role === 'subscriber'
-      //     })
-      //     setUsers(resultantUsersWithoutAdminUser);        
-      //   })
-
       const response = await getUsers(user.token); 
 
       const resultantUsersWithoutAdminUser = response.data.filter(u => {

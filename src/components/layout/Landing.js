@@ -38,13 +38,6 @@ const Landing = () => {
   const loadAllUpcomingShows = async () => {
     try {
       setLoading(true);
-
-      // getUpcomingShows()
-      // .then((res) =>{
-      //     setLoading(false);
-      //     setUpcomingShows(res.data);
-      // })
-
       const response = await getUpcomingShows();
       setUpcomingShows(response.data);
       setLoading(false);  
@@ -57,13 +50,6 @@ const Landing = () => {
   const loadAllTrendingShows = async () => {
     try {
       setLoading(true);
-
-      // getTrendingShows()
-      // .then((res) =>{
-      //     setLoading(false);
-      //     setTrendingShows(res.data);
-      // })
-
       const response = await getTrendingShows();
       setTrendingShows(response.data);
       setLoading(false);  

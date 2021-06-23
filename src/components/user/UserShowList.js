@@ -38,13 +38,6 @@ const UserShowList = () => {
   const loadAllShows = async () => {
     try {
       setLoading(true);
-      // getShows(user.token)
-      // .then((res) =>{
-      //     //console.log(res);
-      //     //setLoading(false);
-      //     setShows(res.data);        
-      // })
-
       const response = await getShows(user.token);
       setShows(response.data);  
       setLoading(false);  
@@ -57,13 +50,6 @@ const UserShowList = () => {
   const loadAllSearchedShows = async () => {
     try {
       setLoading(true);
-      //getShowsByText(text, user.token)
-      // .then((res) =>{
-      //     //console.log(res);
-      //     //setLoading(false);
-      //     setShows(res.data);        
-      // })
-
       const response = await getShowsByText(text, user.token);
       setShows(response.data); 
       setLoading(false);  
@@ -86,41 +72,7 @@ const UserShowList = () => {
     try {
       setLoading(true);
       const IMDB = e.target.value;
-      // if(window.confirm("Delete show?")){
-      //   removeShow(IMDB, user.token)
-      //     .then((res) => {
-      //     //console.log(res.data);
-      //       getShows(user.token)
-      //         .then((res1) =>{
-      //           //console.log(res);
-      //           //setLoading(false);
-      //           setShows(res1.data);        
-              
-      //           let showList1 = []; 
-      //           if (typeof window !== "undefined") {
-      //             // if show is in local storage GET it
-      //             if (typeof window !== 'undefined') {
-      //               localStorage.removeItem('userShowList');
-      //             }
-                  
-      //             // remove duplicates
-      //             let unique = _.uniqWith(res1.data, _.isEqual);
-      //             // save to local storage
-      //             // console.log('unique', unique)
-      //             localStorage.setItem('userShowList', JSON.stringify(unique));
-          
-      //             // add to redux state
-      //             dispatch({
-      //               type: "ADD_TO_LIST",
-      //               payload: unique
-      //             });
-      //           }
-      //       })
-          
-      //       toast.success(`"${res.data.name}" show is removed from your list!`);
-      //     })
-      //     .catch((err) => console.log("Remove show err", err));
-      // }
+      
       if(window.confirm("Delete show?")){
         const response1 = await removeShow(IMDB, user.token);
         const response2 = await getShows(user.token);
